@@ -1,18 +1,7 @@
 # ChatSignalR
 How to make a chat with SignalR
 
-# Configuration
-
-You must edit the appsetings.json file and change the Jwt:SecretKey.
-```json
-{
-  "Jwt": {
-    "Issuer": "Mafyou",
-    "Audience": "KIT",
-    "SecretKey": "ENTER YOUR KEY"
-  }
-}
-```
+# The Problem
 
 Then try to run API then MeConsole and OtherConsole. Multi configuration as startup works as well.
 
