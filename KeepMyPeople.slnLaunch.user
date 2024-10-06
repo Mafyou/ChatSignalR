@@ -1,0 +1,35 @@
+[
+  {
+    "Name": "Main",
+    "Projects": [
+      {
+        "Path": "KeepMyPeople.Bridge\\KeepMyPeople.Bridge.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "KeepMyPeople.MeConsole\\KeepMyPeople.MeConsole.csproj",
+        "Action": "Start",
+        "DebugTarget": "KeepMyPeople.MeConsole"
+      },
+      {
+        "Path": "KeepMyPeople.OtherConsole\\KeepMyPeople.OtherConsole.csproj",
+        "Action": "Start",
+        "DebugTarget": "KeepMyPeople.OtherConsole"
+      }
+    ]
+  },
+  {
+    "Name": "Azure",
+    "Projects": [
+      {
+        "Path": "KeepMyPeople.MeConsole\\KeepMyPeople.MeConsole.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "KeepMyPeople.OtherConsole\\KeepMyPeople.OtherConsole.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
