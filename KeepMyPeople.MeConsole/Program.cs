@@ -27,7 +27,7 @@ async Task<string?> SetTokenAsync(string id)
 var mafyouId = "21C54AD1-560C-4560-9FE1-FAB703896AD3".ToLower();
 var broId = "21C54AD1-560C-4560-9FE1-FAB703896AD2".ToLower();
 
-// await Task.Delay(TimeSpan.FromSeconds(10));
+await Task.Delay(TimeSpan.FromSeconds(5));
 
 var token = await SetTokenAsync(mafyouId);
 
@@ -59,12 +59,11 @@ var chatSettings = new ChatSettings
     },
     OtherKey = Guid.NewGuid().ToString()
 };
-
-hub.On<ChatSettings, ReceivingMessage>(ChatHubStatus.ReceivingMessage, (settings, rm) =>
+hub.On<ReceivingMessage>(ChatHubStatus.ReceivingMessage, (rm) =>
 {
     Console.WriteLine($"{chatSettings.Me.Pseudo} : {rm.Message}");
 });
-hub.On<ChatSettings, SentMessage>(ChatHubStatus.SentMessage, (settings, sm) =>
+hub.On<SentMessage>(ChatHubStatus.SentMessage, (sm) =>
 {
     Console.WriteLine($"Message bien envoyé à {sm.To.Pseudo} !");
 });
@@ -81,19 +80,21 @@ hub.On<Initialization>(ChatHubStatus.Initialized, async (init) =>
 {
     Console.WriteLine("Initializing");
     Console.WriteLine($"ChatHubStatus.Initialized: me => {chatSettings.Me?.Pseudo} other => {chatSettings.Other?.Pseudo}");
-
-    while (true)
-    {
-        Console.Write($"{chatSettings.Me.Pseudo} : ");
-        await hub.SendAsync(ChatHubStatus.SendMessage, chatSettings, new SendMessage("Yo from Mafyou")); // Test direcly in sending
-        var line = Console.ReadLine();
-        await hub.SendAsync(ChatHubStatus.SendMessage, chatSettings, new SendMessage(line));
-    }
 });
+async Task newPrompt()
+{
+    Console.Write($"{chatSettings.Me.Pseudo} : ");
+    var line = Console.ReadLine();
+    await hub.SendAsync(ChatHubStatus.SendMessage, chatSettings, new SendMessage(line));
+}
+
 try
 {
     await hub.StartAsync();
-    while (true) { }
+    while (true)
+    {
+        await newPrompt();
+    }
 }
 catch (Exception ex)
 {
